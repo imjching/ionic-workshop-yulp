@@ -38,6 +38,13 @@ angular.module('yulpApp', ['ionic'])
           templateUrl: 'views/home/feed.html'
         }
       }
+    }).state('home.feed-details', {
+      url: '/feed/:businessId', // url will be /home/feed/1
+      views: {
+        'tab-feed': {
+          templateUrl: 'views/home/feed-details.html'
+        }
+      }
     }).state('home.search', {
       url: '/search', // url will be /home/search
       views: {

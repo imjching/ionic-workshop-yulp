@@ -1,7 +1,7 @@
 <ion-view view-title="Yulp!" ng-controller="FeedCtrl as vm">
   <ion-content>
     <div class="list">
-      <a class="item item-thumbnail-left item-icon-right" ng-repeat="business in vm.businesses">
+      <a class="item item-thumbnail-left item-icon-right" ng-repeat="business in vm.businesses" ui-sref="home.feed-details({ businessId: business.id })">
         <img ng-src="{{ business.image_url }}">
         <h2>{{ business.name }}</h2>
         <p>Status: {{ business.is_closed ? 'Close' : 'Open' }}</p>
