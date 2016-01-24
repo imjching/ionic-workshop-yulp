@@ -1,0 +1,16 @@
+<ion-view view-title="Yulp!" ng-controller="FeedCtrl as vm">
+  <ion-content>
+    <div class="list">
+      <a class="item item-thumbnail-left item-icon-right" ng-repeat="business in vm.businesses">
+        <img ng-src="{{ business.image_url }}">
+        <h2>{{ business.name }}</h2>
+        <p>Status: {{ business.is_closed ? 'Close' : 'Open' }}</p>
+        <img ng-src="{{ business.rating_img_url }}">
+        <p>Reviews: <b>{{ business.review_count }}</b></p>
+        <p><i class="ion-ios-telephone"></i>&nbsp;{{ business.display_phone }}</p>
+
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>
