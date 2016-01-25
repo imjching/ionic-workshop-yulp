@@ -18,7 +18,6 @@
       var method = 'GET';
       var url = 'http://api.yelp.com/v2/search';
       var params = {
-        callback: 'angular.callbacks._0',
         location: location,
         oauth_consumer_key: 'XQEw1QqtFBcg0Jz-pImoBA', //Consumer Key
         oauth_token: 'Dqjyhl2cZjjzGxRJow3dOLVJtI2OTfHE', //Token
@@ -32,14 +31,23 @@
       var tokenSecret = 'ChfcWjfXe3r8w2YZKBqbKPTLmLA'; //Token Secret
       var signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, { encodeSignature: false});
       params['oauth_signature'] = signature;
-      $http.jsonp(url, { params : params }).success(callback);
+
+      $http.get(url, { params : params }).then(function (res) {
+        callback(res.data)
+      });
     }
 
     function getData(callback) {
       return searchAPI('Kuala Lumpur', 10, callback);
     }
+
+    function searchData(toSearch, callback) {
+      return searchAPI(toSearch, 10, callback);
+    }
+
     return {
-      getData: getData
+      getData: getData,
+      searchData: searchData
     };
   }
 })();
