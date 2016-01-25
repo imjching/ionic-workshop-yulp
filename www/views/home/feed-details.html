@@ -10,7 +10,9 @@
     </div>
 
     <div class="card">
-      <p class="item"> Google Maps Here </p>
+      <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.map.options">
+        <ui-gmap-marker idKey="vm.business.id" coords="vm.marker.center" options="vm.marker.options"></ui-gmap-marker>
+      </ui-gmap-google-map>
     </div>
   </ion-content>
 </ion-view>
