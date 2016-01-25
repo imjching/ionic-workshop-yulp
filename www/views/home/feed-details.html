@@ -1,5 +1,16 @@
-<ion-view view-title="Details">
+<ion-view view-title="Details" ng-controller="FeedDetailsCtrl as vm">
   <ion-content>
-    <h1>Todo: Feed Details here...</h1>
+    <div class="card">
+      <div class="item item-text-wrap item-icon-left">
+        <i class="icon ion-home"></i>
+        <h2 ng-repeat="line in vm.business.location.display_address">
+          {{ line }}
+        </h2>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="item"> Google Maps Here </p>
+    </div>
   </ion-content>
 </ion-view>
