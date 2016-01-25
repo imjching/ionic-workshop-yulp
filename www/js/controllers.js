@@ -8,9 +8,9 @@
   function FeedCtrl(YelpAPI) {
     var vm = this; // view model (vm)
 
-    YelpAPI.getData().then(function(res) {
-      vm.total = res.data.total;
-      vm.businesses = res.data.businesses;
+    YelpAPI.getData(function(data) {
+      vm.total = data.total;
+      vm.businesses = data.businesses;
 
       console.log(vm.businesses);
     });
@@ -23,8 +23,8 @@
     console.log(vm.businessId);
 
     // load the first data first, temporary
-    YelpAPI.getData().then(function(res) {
-      vm.businesses = res.data.businesses;
+    YelpAPI.getData(function(data) {
+      vm.businesses = data.businesses;
 
       vm.business = vm.businesses[0]; // temporary
     });
