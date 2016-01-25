@@ -20,14 +20,8 @@
   function FeedDetailsCtrl($stateParams, YelpAPI) {
     var vm = this; // view model (vm)
 
-    vm.businessId = $stateParams.businessId;
-    console.log(vm.businessId);
-
-    // load the first data first, temporary
-    YelpAPI.getData(function(data) {
-      vm.businesses = data.businesses;
-
-      vm.business = vm.businesses[0]; // temporary
+    YelpAPI.searchBusiness($stateParams.businessId, function(data) {
+      vm.business = data;
     });
   }
 
