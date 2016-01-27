@@ -2,18 +2,35 @@
   'use strict';
 
   angular.module('yulpApp')
-    .controller('FeedCtrl', ['YelpAPI', FeedCtrl])
+    .controller('FeedCtrl', ['YelpAPI', '$scope', FeedCtrl])
     .controller('FeedDetailsCtrl', ['$stateParams', 'YelpAPI', FeedDetailsCtrl])
     .controller('SearchCtrl', ['YelpAPI', '$scope', SearchCtrl]);
 
-  function FeedCtrl(YelpAPI) {
+  function FeedCtrl(YelpAPI, $scope) {
     var vm = this; // view model (vm)
 
-    YelpAPI.getData(function(data) {
-      vm.total = data.total;
-      vm.businesses = data.businesses;
+    vm.canLoad = true;
 
-      console.log(vm.businesses);
+    vm.loadMore = function() {
+      if (!vm.canLoad) {
+        return;
+      }
+      YelpAPI.getNextData(function(data) {
+        if (data.businesses.length == 0) {
+          vm.canLoad = false; // no more businesses to load
+        }
+        if (vm.businesses == undefined) {
+          vm.businesses = data.businesses;
+        } else {
+          vm.businesses.push.apply(vm.businesses, data.businesses);
+        }
+        console.log(vm.businesses);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
+    };
+
+    $scope.$on('$stateChangeSuccess', function() {
+      vm.loadMore();
     });
   }
 
