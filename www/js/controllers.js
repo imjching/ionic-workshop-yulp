@@ -4,7 +4,8 @@
   angular.module('yulpApp')
     .controller('FeedCtrl', FeedCtrl)
     .controller('FeedDetailsCtrl', FeedDetailsCtrl)
-    .controller('SearchCtrl', SearchCtrl);
+    .controller('SearchCtrl', SearchCtrl)
+    .controller('SettingsCtrl', SettingsCtrl);
 
   FeedCtrl.$inject = ['YelpAPI', '$scope'];
   function FeedCtrl(YelpAPI, $scope) {
@@ -12,11 +13,14 @@
 
     vm.canLoad = true;
 
-    vm.loadMore = function() {
+    vm.loadMore = function(force) {
+      if (force === undefined) {
+        force = false;
+      }
       if (!vm.canLoad) {
         return;
       }
-      YelpAPI.getNextData(function(data) {
+      YelpAPI.getNextData(force, function(data) {
         if (data.businesses.length == 0) {
           vm.canLoad = false; // no more businesses to load
         }
@@ -32,6 +36,11 @@
 
     $scope.$on('$stateChangeSuccess', function() {
       vm.loadMore();
+    });
+
+    $scope.$on('resetFeed', function() {
+      vm.businesses = undefined;
+      vm.loadMore(true); // load again with force start
     });
   }
 
@@ -70,5 +79,19 @@
         vm.businesses = data.businesses;
       });
     }
+  }
+
+  SettingsCtrl.$inject = ['$localstorage', '$rootScope'];
+  function SettingsCtrl($localstorage, $rootScope) {
+    var vm = this;
+
+    vm.defaultLocation = $localstorage.get('defaultLocation', 'Kuala Lumpur');
+
+    vm.changeDefLocation = function() {
+      $localstorage.set('defaultLocation', vm.defaultLocation);
+      $rootScope.$broadcast('resetFeed');
+    }
+
+    console.log($localstorage.get('defaultLocation'));
   }
 })();

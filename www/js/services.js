@@ -2,9 +2,31 @@
   'use strict';
 
   angular.module('yulpApp')
-    .factory('YelpAPI', ['$http', '$ionicLoading', YelpAPI]);
+    .factory('YelpAPI', YelpAPI)
+    .factory('$localstorage', localStorage);
 
-  function YelpAPI($http, $ionicLoading) {
+  localStorage.$inject = ['$window'];
+
+  function localStorage($window) {
+    return {
+      set: function(key, value) {
+        $window.localStorage[key] = value;
+      },
+      get: function(key, defaultValue) {
+        return $window.localStorage[key] || defaultValue;
+      },
+      setObject: function(key, value) {
+        $window.localStorage[key] = JSON.stringify(value);
+      },
+      getObject: function(key) {
+        return JSON.parse($window.localStorage[key] || '{}');
+      }
+    }
+  }
+
+  YelpAPI.$inject = ['$http', '$ionicLoading', '$localstorage'];
+
+  function YelpAPI($http, $ionicLoading, $localstorage) {
     var homepageOffset = -1;
 
     function randomString(length, chars) {
@@ -70,13 +92,13 @@
       });
     }
 
-    function getNextData(callback) {
-      if (homepageOffset == -1) {
+    function getNextData(force, callback) {
+      if (homepageOffset == -1 || force) {
         homepageOffset = 0;
       } else {
         homepageOffset += 10; // increase
       }
-      return searchAPI('Kuala Lumpur', 10, homepageOffset, callback);
+      return searchAPI($localstorage.get('defaultLocation', 'Kuala Lumpur'), 10, homepageOffset, callback);
     }
 
     function searchData(toSearch, callback) {

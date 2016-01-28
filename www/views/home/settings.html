@@ -1,4 +1,4 @@
-<ion-view view-title="Settings">
+<ion-view view-title="Settings" ng-controller="SettingsCtrl as vm">
   <ion-content>
     <ion-list>
 
@@ -6,9 +6,9 @@
         <div class="input-label">
           Default Location
         </div>
-        <select>
+        <select ng-model="vm.defaultLocation" ng-change="vm.changeDefLocation()">
           <option>Selangor</option>
-          <option selected>Kuala Lumpur</option>
+          <option>Kuala Lumpur</option>
           <option>Sarawak</option>
           <option>Johor</option>
           <option>Penang</option>
