@@ -2,10 +2,11 @@
   'use strict';
 
   angular.module('yulpApp')
-    .controller('FeedCtrl', ['YelpAPI', '$scope', FeedCtrl])
-    .controller('FeedDetailsCtrl', ['$stateParams', 'YelpAPI', FeedDetailsCtrl])
-    .controller('SearchCtrl', ['YelpAPI', '$scope', SearchCtrl]);
+    .controller('FeedCtrl', FeedCtrl)
+    .controller('FeedDetailsCtrl', FeedDetailsCtrl)
+    .controller('SearchCtrl', SearchCtrl);
 
+  FeedCtrl.$inject = ['YelpAPI', '$scope'];
   function FeedCtrl(YelpAPI, $scope) {
     var vm = this; // view model (vm)
 
@@ -34,6 +35,7 @@
     });
   }
 
+  FeedDetailsCtrl.$inject = ['$stateParams', 'YelpAPI'];
   function FeedDetailsCtrl($stateParams, YelpAPI) {
     var vm = this; // view model (vm)
 
@@ -57,6 +59,7 @@
     });
   }
 
+  SearchCtrl.$inject = ['YelpAPI', '$scope'];
   function SearchCtrl(YelpAPI, $scope) {
     var vm = this; // view model
 
