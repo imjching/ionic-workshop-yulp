@@ -35,28 +35,32 @@ angular.module('yulpApp', ['ionic', 'uiGmapgoogle-maps'])
       url: '/feed', // url will be /home/feed
       views: {
         'tab-feed': {
-          templateUrl: 'views/home/feed.html'
+          templateUrl: 'views/home/feed.html',
+          controller: 'FeedCtrl as vm'
         }
       }
     }).state('home.feed-details', {
       url: '/feed/:businessId', // url will be /home/feed/1
       views: {
         'tab-feed': {
-          templateUrl: 'views/home/feed-details.html'
+          templateUrl: 'views/home/feed-details.html',
+          controller: 'FeedDetailsCtrl as vm'
         }
       }
     }).state('home.search', {
       url: '/search', // url will be /home/search
       views: {
         'tab-search': {
-          templateUrl: 'views/home/search.html'
+          templateUrl: 'views/home/search.html',
+          controller: 'SearchCtrl as vm'
         }
       }
     }).state('home.settings', {
       url: '/settings', // url will be /home/settings
       views: { // named views
         'tab-settings': {
-          templateUrl: 'views/home/settings.html'
+          templateUrl: 'views/home/settings.html',
+          controller: 'SettingsCtrl as vm'
         }
       }
     });
